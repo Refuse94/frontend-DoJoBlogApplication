@@ -38,24 +38,20 @@
 }
 
 .blog h2 {
-  color: rgb(214, 19, 52);
+  color: rgb(214, 24, 24);
   text-transform: none;
   font-weight: bold;
+  text-decoration: none;
 }
 
 .nav_bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: -150px;
+
   flex-direction: row;
 }
 .nav_bar h2 {
   color: yellow;
   margin-right: 1250px;
-}
-
-.nav_bar p {
-  margin: 50px;
-  cursor: pointer;
 }

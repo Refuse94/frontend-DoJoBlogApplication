@@ -1,5 +1,5 @@
 import { BlogList } from "./BlogList";
-import { useFetch } from "./useFetch";
+import { ResponseBlogs, useFetch } from "./useFetch";
 
 export interface Blog {
   title: string;
@@ -13,13 +13,13 @@ export interface Blog {
 export const Main: React.FC = () => {
   const { data, isPending, error } = useFetch(
     "http://localhost:8000/data_blogs"
-  );
+  ) as ResponseBlogs;
   console.log("rerender", data);
   return (
     <div>
       {error && <div> {error} </div>}
       {isPending && <div>Loading...</div>}
-      {data && <BlogList blog={data}></BlogList>}
+      {data && <BlogList blogs={data}></BlogList>}
     </div>
   );
 };

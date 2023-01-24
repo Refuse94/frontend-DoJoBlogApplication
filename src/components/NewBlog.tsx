@@ -1,13 +1,17 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export const NewBlog: React.FC<{}> = () => {
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
   const [author, setAuthor] = useState<string>("mario");
+  const history = useHistory();
+  const [isPending, setIsPending] = useState<boolean>(false);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const formData = { title, body, author };
+    setIsPending(true);
 
     fetch("http://localhost:8000/data_blogs", {
       method: "POST",
@@ -15,6 +19,8 @@ export const NewBlog: React.FC<{}> = () => {
       body: JSON.stringify(formData),
     }).then(async (res) => {
       console.log("new Blogg was Added");
+      setIsPending(false);
+      history.push("/");
     });
   };
   return (

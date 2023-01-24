@@ -3,7 +3,7 @@ import { Main } from "./components/Main";
 import { NavBar } from "./components/NavBar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { NewBlog } from "./components/NewBlog";
-/*import { BlogDetails } from "./components/BlogDetails";*/
+import { BlogDetails } from "./components/BlogDetails";
 
 export const App: React.FC = () => {
   return (
@@ -18,9 +18,9 @@ export const App: React.FC = () => {
             <Route path="/create">
               <NewBlog></NewBlog>
             </Route>
-            {/* <Route path="/blogs/:id">
+            <Route path="/data_blogs/:id">
               <BlogDetails></BlogDetails>
-            </Route> */}
+            </Route>
           </Switch>
         </Router>
       </header>

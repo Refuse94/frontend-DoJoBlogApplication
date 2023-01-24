@@ -1,18 +1,23 @@
-export const Default: React.FC<{}> = () => {
-  return <div></div>;
-};
+import { useHistory, useParams } from "react-router-dom";
+import { ResponseBlog, useFetch } from "./useFetch";
+import { handleDelete } from "./api";
 
-/* import { useParams } from "react-router-dom";
-import { Blog } from "./Main";
-import { useFetch } from "./useFetch";
-
-export const BlogDetails: React.FC<{ blog: Blog[] }> = () => {
-  const { id } = useParams();
+export const BlogDetails: React.FC<{}> = () => {
+  const { id } = useParams<{ id: string }>();
   const {
     data: blog,
     error,
     isPending,
-  } = useFetch("http://localhost:8000/data_blogs" + id);
+  } = useFetch("http://localhost:8000/data_blogs/" + id) as ResponseBlog;
+  const history = useHistory();
+
+  // const handleDelete = () => {
+  //   fetch("http://localhost:8000/data_blogs/" + id, {
+  //     method: "DELETE",
+  //   }).then(() => {
+  //     history.push("/");
+  //   });
+  // };
   return (
     <div>
       {isPending && <div>Loading...</div>}
@@ -20,11 +25,28 @@ export const BlogDetails: React.FC<{ blog: Blog[] }> = () => {
       {blog && (
         <article>
           <h2>{blog.title}</h2>
-          <p>Written by {blog.author}</p>
+          <p>
+            Written by{" "}
+            <span
+              style={{
+                color: "yellow",
+                fontSize: "60px",
+                fontWeight: "bolder",
+              }}
+            >
+              {" "}
+              {blog.author}
+            </span>
+          </p>
           <div>{blog.body}</div>
+          <button
+            style={{ background: "green", color: "white" }}
+            onClick={() => handleDelete(parseInt(id), history)}
+          >
+            delete blog
+          </button>
         </article>
       )}
     </div>
   );
 };
-*/
