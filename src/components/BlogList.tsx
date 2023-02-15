@@ -1,7 +1,7 @@
 import { Blog } from "./Main";
 import { Link } from "react-router-dom";
 import { handleDelete } from "./api";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export const BlogList: React.FC<{
   blogs: Blog[];
