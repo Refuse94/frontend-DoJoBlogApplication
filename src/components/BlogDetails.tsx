@@ -1,27 +1,31 @@
 import { useHistory, useParams } from "react-router-dom";
 import { ResponseBlog, useFetch } from "./useFetch";
 import { handleDelete } from "./api";
+import { Author, Blog } from "./Main";
 
-export const BlogDetails: React.FC<{}> = () => {
+export const BlogDetails: React.FC<{ authors: Author[]; blogs: Blog[] }> = ({
+  authors,
+  blogs,
+}) => {
   const { id } = useParams<{ id: string }>();
-  const {
-    data: blog,
-    error,
-    isPending,
-  } = useFetch("http://localhost:8000/data_blogs/" + id) as ResponseBlog;
-  const history = useHistory();
+  // const {
+  //   data: blog,
+  //   error,
+  //   isPending,
+  // } = useFetch("http://localhost:5000/blogs/" + id) as ResponseBlog;
 
-  // const handleDelete = () => {
+  const blog = blogs.find((b) => b.id === parseInt(id));
+
+  const history = useHistory();
   //   fetch("http://localhost:8000/data_blogs/" + id, {
   //     method: "DELETE",
   //   }).then(() => {
   //     history.push("/");
   //   });
   // };
+
   return (
     <div>
-      {isPending && <div>Loading...</div>}
-      {error && <div>{error}</div>}
       {blog && (
         <article>
           <h2>{blog.title}</h2>
@@ -35,7 +39,8 @@ export const BlogDetails: React.FC<{}> = () => {
               }}
             >
               {" "}
-              {blog.author}
+              {authors?.find((author) => author.id == blog.author)?.firstname ??
+                "Author not found"}
             </span>
           </p>
           <div>{blog.body}</div>

@@ -1,28 +1,40 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Author, Blog } from "./Main";
+import { useFetch } from "./useFetch";
+import { Dropdown, Select } from "semantic-ui-react";
 
-export const NewBlog: React.FC<{}> = () => {
+export const NewBlog: React.FC<{ authors: Author[] }> = ({ authors }) => {
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
-  const [author, setAuthor] = useState<string>("mario");
+  const [author, setAuthor] = useState<number | undefined>(undefined);
   const history = useHistory();
-  const [isPending, setIsPending] = useState<boolean>(false);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const formData = { title, body, author };
-    setIsPending(true);
 
-    fetch("http://localhost:8000/data_blogs", {
+    fetch("http://localhost:5000/blogs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     }).then(async (res) => {
       console.log("new Blogg was Added");
-      setIsPending(false);
       history.push("/");
     });
   };
+
+  // const disabled =
+  //   author === undefined
+  //     ? true
+  //     : false || title
+  //     ? true
+  //     : false || body
+  //     ? true
+  //     : false;
+
+  const disabled = !author || !title || !body;
+
   return (
     <div>
       <h2>Add new Blog</h2>
@@ -44,17 +56,27 @@ export const NewBlog: React.FC<{}> = () => {
         ></textarea>
         <br />
         <label htmlFor="">Author:</label>
-        <select
-          name=""
-          id=""
+        <Select
+          placeholder="Select your Author"
           value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-        >
-          <option value="mario">mario</option>
-          <option value="yoshi">yoshi</option>
-        </select>
+          onChange={(_e, { value }) => {
+            setAuthor(value as number);
+          }}
+          options={
+            authors?.length
+              ? authors.map((author) => ({
+                  key: author.id,
+                  value: author.id,
+                  text: author.firstname,
+                }))
+              : []
+          }
+        />
         <br />
-        <button>Add Blog</button> <br />
+        <button disabled={disabled} type={"submit"}>
+          Add Blog
+        </button>{" "}
+        <br />
         <br /> <br />
         {title} <br />
         {body} <br />

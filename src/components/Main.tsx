@@ -4,22 +4,22 @@ import { ResponseBlogs, useFetch } from "./useFetch";
 export interface Blog {
   title: string;
   body: string;
-  author: string;
+  author: number;
   id: number;
 }
-
+export interface Author {
+  firstname: string;
+  lastname: string;
+  age: number;
+  gender: "female" | "male";
+  id: number;
+}
 // npx json-server --watch src/data/db.json --port 8000
 
-export const Main: React.FC = () => {
-  const { data, isPending, error } = useFetch(
-    "http://localhost:8000/data_blogs"
-  ) as ResponseBlogs;
-  console.log("rerender", data);
+export const Main: React.FC<{ blogs: Blog[] }> = ({ blogs }) => {
   return (
     <div>
-      {error && <div> {error} </div>}
-      {isPending && <div>Loading...</div>}
-      {data && <BlogList blogs={data}></BlogList>}
+      <BlogList blogs={blogs}></BlogList>
     </div>
   );
 };

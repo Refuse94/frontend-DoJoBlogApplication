@@ -19,7 +19,7 @@ export const BlogList: React.FC<{
                 color: "white",
                 fontSize: "14px",
               }}
-              to={`/data_blogs/${blog.id}`}
+              to={`/blogs/${blog.id}`}
             >
               <h2 style={{ fontSize: "30px" }}>{blog.title} </h2>
               <p>
